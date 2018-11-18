@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'main.apps.MainConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,8 +76,15 @@ WSGI_APPLICATION = 'animalSmash.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        #'NAME':'animalSmashDb',
+        #'USER':'mrgreenstar',
+        #'PASSWORD':'ThePassword',
+        #'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        #'PORT': '3306',                      # Set to empty string for default. Not u
+        'OPTIONS': {
+            'read_default_file': 'animalSmash/my.cnf',
+        },
     }
 }
 
@@ -105,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
