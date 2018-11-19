@@ -19,6 +19,7 @@ class IndexView(generic.View):
     def post(self, request, *args, **kwargs):
         firstAnimal = random.choice(Animal.objects.all())
         secondAnimal = random.choice(Animal.objects.all())
-        logging.error(request.POST)
+        logging.error(request.POST.get('firstAnimal'))
+        logging.error(request.POST.get('secondAnimal'))
         return render(request, self.template_name, {'firstAnimal':firstAnimal,
             'secondAnimal':secondAnimal})
