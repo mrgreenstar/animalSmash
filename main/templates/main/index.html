@@ -7,12 +7,11 @@
         <form action="/" method="POST">
             <div class="col-md6">
                 {% csrf_token %}
-                {{ form }}
+                <input type="image" src="static/main/pictures/{{ firstAnimal }}.jpg"/>
             </div>
             <div class="col-md6">
                 {% csrf_token %}
-                {% load static %}
-                <input type="image" src="{% static "main/pictures/dog.png" %}"/>
+                <input type="image" src="static/main/pictures/{{ secondAnimal }}.jpg"/>
             </div>
         </form>
     </div>

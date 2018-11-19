@@ -1,19 +1,21 @@
 import logging
+import random
 from django.shortcuts import render
 from django.views import generic
 
 from .models import Animal
-from .forms import ChooseForm
 # Create your views here.
+#pylint: disable=E1101
 
 class IndexView(generic.View):
     template_name = 'main/index.html'
-    form_class = ChooseForm
+    firstAnimal = random.choice(Animal.objects.all())
+    secondAnimal = random.choice(Animal.objects.all())
     def get(self, request, *args, **kwargs):
-        form = ChooseForm()
-        return render(request, self.template_name, {'form':form})
+        return render(request, self.template_name, {'firstAnimal':self.firstAnimal.animal,
+            'secondAnimal':self.secondAnimal.animal})
 
     def post(self, request, *args, **kwargs):
-        logging.error(request, args, kwargs)
-        form = self.form_class(request.POST)
-        return render(request, self.template_name, {'form':form})
+        logging.debug(request, args, kwargs)
+        return render(request, self.template_name, {'firstAnimal':self.firstAnimal.animal,
+            'secondAnimal':self.secondAnimal.animal})
