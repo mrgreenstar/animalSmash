@@ -6,17 +6,17 @@
     <div class="row">
         <form action="/" method="POST">
             <div class="col-md5">
-                <p class="font-weight-light">{{ firstAnimal.animal }}</p>
+                <p class="font-weight-light">{{ first_animal.animal }}</p>
                 {% csrf_token %}
-                <input type="image" value="{{ firstAnimal.id }}" name="firstAnimal"
-                        src="static/main/pictures/{{ firstAnimal.animal }}.jpg"/>
+                <input type="image" value="{{ first_animal.id }}" name="first_animal"
+                        src="static/main/pictures/{{ first_animal.animal }}.jpg"/>
             </div>
             <p class="font-weight-bold">or</p>
             <div class="col-md5">
-                <p class="font-weight-light">{{ secondAnimal.animal }}</p>
+                <p class="font-weight-light">{{ second_animal.animal }}</p>
                 {% csrf_token %}
-                <input type="image" value="{{ secondAnimal.id }}" name="secondAnimal"
-                        src="static/main/pictures/{{ secondAnimal.animal }}.jpg"/>
+                <input type="image" value="{{ second_animal.id }}" name="second_animal"
+                        src="static/main/pictures/{{ second_animal.animal }}.jpg"/>
             </div>
         </form>
     </div>

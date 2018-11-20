@@ -4,28 +4,40 @@ from django.shortcuts import render
 from django.views import generic
 
 from .models import Animal
+from .rating import new_rating
 # Create your views here.
 #pylint: disable=E1101
 
 class IndexView(generic.View):
     template_name = 'main/index.html'
-
+    
+    all_animals = list(Animal.objects.all())
+    first_animal = random.choice(all_animals)
+    all_animals.remove(first_animal)
+    second_animal = random.choice(all_animals)
+    
     def get(self, request, *args, **kwargs):
-        firstAnimal = random.choice(Animal.objects.all())
-        secondAnimal = random.choice(Animal.objects.all())
-        return render(request, self.template_name, {'firstAnimal':firstAnimal,
-            'secondAnimal':secondAnimal})
+        return render(request, self.template_name, {'first_animal':self.first_animal,
+            'second_animal':self.second_animal})
 
     def post(self, request, *args, **kwargs):
-        result = request.POST.get('firstAnimal')
-        if result:
-            chosenAnimal = Animal.objects.get(pk=result)
+        if str(self.first_animal.id) == request.POST.get('first_animal'):
+            logging.error('first')
+            chosen_animal = self.first_animal
+            unchosen_animal = self.second_animal
         else:
-            chosenAnimal = Animal.objects.get(pk=request.POST.get('secondAnimal'))
-        chosenAnimal.rating += 1
-        chosenAnimal.save()
+            logging.error('second')
+            chosen_animal = self.second_animal
+            unchosen_animal = self.first_animal
         
-        firstAnimal = random.choice(Animal.objects.all())
-        secondAnimal = random.choice(Animal.objects.all())
-        return render(request, self.template_name, {'firstAnimal':firstAnimal,
-            'secondAnimal':secondAnimal})
+        chosen_animal.rating, unchosen_animal.rating = new_rating(chosen_animal.rating,
+            unchosen_animal.rating)
+        chosen_animal.save()
+        unchosen_animal.save()
+
+        all_animals = list(Animal.objects.all())
+        self.first_animal = random.choice(all_animals)
+        all_animals.remove(self.first_animal)
+        self.second_animal = random.choice(all_animals)
+        return render(request, self.template_name, {'first_animal':self.first_animal,
+            'second_animal':self.second_animal})
