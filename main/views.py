@@ -48,3 +48,14 @@ class IndexView(generic.View):
         self.second_animal = random.choice(all_animals)   
         return render(request, self.template_name, {'first_animal':self.first_animal,
             'second_animal':self.second_animal})
+
+class RatingView(generic.ListView):
+    template_name = "main/rating.html"
+    context_object_name = 'animal_list'
+
+    def get_queryset(self):
+        '''
+            Return the top of animals.
+        '''
+        return Animal.objects.order_by('-rating')
+    

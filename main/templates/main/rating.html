@@ -1,0 +1,27 @@
+<a href="{% url 'index' %}">Go back to votes</a>
+<table border="1">
+    <tr>
+        <td>
+            Id    
+        </td>
+        <td>
+            Name
+        </td>
+        <td>
+            Rating
+        </td>
+    </tr>
+    {% for animal in animal_list %}
+        <tr>
+            <td>
+                {{ animal.id }} 
+            </td>
+            <td>
+                {{ animal.animal }}
+            </td>
+            <td>
+                {{ animal.rating|floatformat:-2 }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
