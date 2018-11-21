@@ -17,7 +17,6 @@ class IndexView(generic.View):
     second_animal = random.choice(all_animals)
 
     def get(self, request, *args, **kwargs):
-        logging.error("get")
         all_animals = list(Animal.objects.all())
         self.first_animal = random.choice(all_animals)
         all_animals.remove(self.first_animal)
@@ -26,7 +25,6 @@ class IndexView(generic.View):
             'second_animal':self.second_animal})
 
     def post(self, request, *args, **kwargs):
-        logging.error(request.POST.items)
         if request.POST.get("first_animal"):
             chosen_animal_id = request.POST.get("first_animal").split('&')[0]
             unchosen_animal_id = request.POST.get("first_animal").split('&')[1]
