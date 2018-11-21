@@ -8,14 +8,14 @@
             <div class="col-md5">
                 <p class="font-weight-light">{{ first_animal.animal }}</p>
                 {% csrf_token %}
-                <input type="image" value="{{ first_animal.id }}" name="first_animal"
+                <input type="image" value="{{ first_animal.id }}&{{ second_animal.id }}" name="first_animal"
                         src="static/main/pictures/{{ first_animal.animal }}.jpg"/>
             </div>
             <p class="font-weight-bold">or</p>
             <div class="col-md5">
                 <p class="font-weight-light">{{ second_animal.animal }}</p>
                 {% csrf_token %}
-                <input type="image" value="{{ second_animal.id }}" name="second_animal"
+                <input type="image" value="{{ second_animal.id }}&{{first_animal.id}}" name="second_animal"
                         src="static/main/pictures/{{ second_animal.animal }}.jpg"/>
             </div>
         </form>
