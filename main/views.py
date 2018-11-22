@@ -28,14 +28,12 @@ class IndexView(generic.View):
 
     def post(self, request, *args, **kwargs):
         if request.POST.get("first_animal"):
-            chosen_animal_id = request.POST.get("first_animal").split('&')[0]
-            unchosen_animal_id = request.POST.get("first_animal").split('&')[1]
+            chosen_animal = Animal.objects.get(pk=request.POST.get("first_animal"))
+            unchosen_animal = IndexView.second_animal
         else:
-            chosen_animal_id = request.POST.get("second_animal").split('&')[0]
-            unchosen_animal_id = request.POST.get("second_animal").split('&')[1]
+            chosen_animal = Animal.objects.get(pk=request.POST.get("second_animal"))
+            unchosen_animal = IndexView.first_animal
         
-        chosen_animal = Animal.objects.get(pk=chosen_animal_id)
-        unchosen_animal = Animal.objects.get(pk=unchosen_animal_id)
         chosen_animal.rating, unchosen_animal.rating = new_rating(chosen_animal.rating,
             unchosen_animal.rating)
         chosen_animal.save()
