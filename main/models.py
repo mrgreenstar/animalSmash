@@ -8,3 +8,6 @@ class Animal(models.Model):
 
     def __repr__(self):
         return '<Animal> animal: {}, rating {}'.format(self.animal, self.rating)
+
+    def __str__(self):
+        return self.animal

@@ -16,10 +16,13 @@ class IndexView(generic.View):
         '''
             ClassMethod for generate new pair of animals.
         '''
-        all_animals = list(Animal.objects.all())
-        cls.first_animal = random.choice(all_animals)
-        all_animals.remove(cls.first_animal)
-        cls.second_animal = random.choice(all_animals)
+        cls.all_animals = list(Animal.objects.all())
+        if cls.all_animals:
+            cls.first_animal = random.choice(cls.all_animals)
+            cls.all_animals.remove(cls.first_animal)
+            cls.second_animal = random.choice(cls.all_animals)
+        else:
+            logging.error("Empty animal list")
 
     def get(self, request, *args, **kwargs):
         IndexView.random_animals()
@@ -39,11 +42,7 @@ class IndexView(generic.View):
         chosen_animal.save()
         unchosen_animal.save()
 
-        # For new animals after POST
-        all_animals = list(Animal.objects.all())
-        IndexView.first_animal = random.choice(all_animals)
-        all_animals.remove(IndexView.first_animal)
-        IndexView.second_animal = random.choice(all_animals)   
+        IndexView.random_animals()
         return render(request, self.template_name, {'first_animal':IndexView.first_animal,
             'second_animal':IndexView.second_animal})
 
