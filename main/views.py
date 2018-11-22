@@ -10,19 +10,21 @@ from .rating import new_rating
 
 class IndexView(generic.View):
     template_name = 'main/index.html'
-    
-    all_animals = list(Animal.objects.all())
-    first_animal = random.choice(all_animals)
-    all_animals.remove(first_animal)
-    second_animal = random.choice(all_animals)
+
+    @classmethod
+    def random_animals(cls):
+        '''
+            ClassMethod for generate new pair of animals.
+        '''
+        all_animals = list(Animal.objects.all())
+        cls.first_animal = random.choice(all_animals)
+        all_animals.remove(cls.first_animal)
+        cls.second_animal = random.choice(all_animals)
 
     def get(self, request, *args, **kwargs):
-        all_animals = list(Animal.objects.all())
-        self.first_animal = random.choice(all_animals)
-        all_animals.remove(self.first_animal)
-        self.second_animal = random.choice(all_animals)   
-        return render(request, self.template_name, {'first_animal':self.first_animal,
-            'second_animal':self.second_animal})
+        IndexView.random_animals()
+        return render(request, self.template_name, {'first_animal':IndexView.first_animal,
+            'second_animal':IndexView.second_animal})
 
     def post(self, request, *args, **kwargs):
         if request.POST.get("first_animal"):
@@ -41,11 +43,11 @@ class IndexView(generic.View):
 
         # For new animals after POST
         all_animals = list(Animal.objects.all())
-        self.first_animal = random.choice(all_animals)
-        all_animals.remove(self.first_animal)
-        self.second_animal = random.choice(all_animals)   
-        return render(request, self.template_name, {'first_animal':self.first_animal,
-            'second_animal':self.second_animal})
+        IndexView.first_animal = random.choice(all_animals)
+        all_animals.remove(IndexView.first_animal)
+        IndexView.second_animal = random.choice(all_animals)   
+        return render(request, self.template_name, {'first_animal':IndexView.first_animal,
+            'second_animal':IndexView.second_animal})
 
 class RatingView(generic.ListView):
     template_name = "main/rating.html"

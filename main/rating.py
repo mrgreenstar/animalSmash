@@ -7,6 +7,7 @@ def new_rating(r_a, r_b):
         r_a - first player rating\n
         r_b - second player rating\n
         Returns new player A rating and new player B rating\n
+        Uses Elo rating\n
     '''
     k = 10
     math_expec_a = 1 / (1 + 10**((r_b - r_a) / 400))
