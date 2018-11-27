@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.views import generic
 
 from .models import Animal
+from .forms import AddAnimalForm
 from .rating import new_rating
 # Create your views here.
 #pylint: disable=E1101
@@ -55,4 +56,10 @@ class RatingView(generic.ListView):
             Return the top of animals.
         '''
         return Animal.objects.order_by('-rating')
-    
+
+class AddAnimalView(generic.FormView):
+    template_name = "main/addAnimal.html"
+    form_class = AddAnimalForm
+
+    def form_valid(self, form):
+        return super().form_valid(form)
